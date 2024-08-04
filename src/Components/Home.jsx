@@ -10,13 +10,15 @@ export default function Home () {
   const blogs = useSelector( store => store?.blogs?.allBlogs );
 
   return (
-    <div className="grid grid-cols-3 gap-x-10 gap-y-10 pt-[5rem] px-[15rem] ">
-      {  blogs?.map( ( blog ) => {
-        return ( <NavLink key={ blog?.username } to={ `/blog/${ blog?.blogId }` } >
-          <BlogCards title={ blog?.title } author={ blog?.username } />
+    <div className="flex pl-[30%] pt-[5%]">
+      <div className="flex flex-col justify-start gap-y-6 w-2/5 mb-[10rem]">
+        { blogs?.map( ( blog ) => {
+          return ( <NavLink key={ blog?.blogId } to={ `/blog/${ blog?.blogId }` } >
+            <BlogCards title={ blog?.title } author={ blog?.username } timeDate={blog?.timeDate} description={blog?.description} />
           </NavLink> );
-        } ) 
-      }
+        } )
+        } 
+      </div>
     </div>
   );
 }

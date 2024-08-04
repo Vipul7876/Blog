@@ -11,12 +11,12 @@ export default function MyBlogs () {
   useUserBlogs();
 
   return (
-    <div className="mb-14 pt-[5rem] px-[15rem]">
+    <div className="mb-14 pt-[5rem] px-[15rem] font-ubuntu">
       <div className="grid grid-cols-3 gap-x-10 gap-y-10 pt-10 px-6">
         {
           Blogs?.map( ( blog ) => {
             return ( <NavLink key={ blog?.blogId } to={ `/blog/${ blog?.blogId }` } >
-              <BlogCards title={ blog?.title } id={ blog?.blogId } author={ blog?.username } />
+              <BlogCards title={ blog?.title } id={ blog?.blogId } author={ blog?.username } timeDate={blog?.timeDate} description={blog?.description} />
             </NavLink> );
           } )
         }

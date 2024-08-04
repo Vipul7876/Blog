@@ -30,22 +30,22 @@ export const Signup = async ( username, password ) => {
   return data;
 };
 
-export const addBlog = async ( username, title, blog ) => {
-  const result = await axios.post( import.meta.env.VITE_APP_ADDBLOG, { username, title, blog } );
+export const addBlog = async ( username, title, blog, description ) => {
+  const result = await axios.post( import.meta.env.VITE_APP_ADDBLOG, { username, title, blog, description } );
   const data = await result.data;
-  
+
   return data;
 };
 
-export const updateUserBlog = async ( blogId, username, title, blog ) => {
-  const result = await axios.post( import.meta.env.VITE_APP_UPDATEBLOG, { blogId, username, title, blog } );
+export const updateUserBlog = async ( blogId, username, title, blog, description ) => {
+  const result = await axios.post( import.meta.env.VITE_APP_UPDATEBLOG, { blogId, username, title, blog, description } );
   const data = await result.data;
   return data;
 };
 
 
-export const deleteBlog = async ( blogId,username ) => {
-  const result = await axios.post( import.meta.env.VITE_APP_DELETEBLOG, { blogId ,username } );
+export const deleteBlog = async ( blogId, username ) => {
+  const result = await axios.post( import.meta.env.VITE_APP_DELETEBLOG, { blogId, username } );
   const data = await result.data;
   return data;
 };

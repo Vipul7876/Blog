@@ -15,12 +15,13 @@ export default function AddBlog () {
   const title = useRef( null );
   const blog = useRef( null );
   const blogId = useRef( null );
+  const description = useRef( null );
 
   const handlesubmit = async ( e ) => {
     e.preventDefault();
 
     if ( updateBlog ) {
-      const data = await updateUserBlog( blogId?.current?.value, username, title?.current?.value, blog?.current?.value );
+      const data = await updateUserBlog( blogId?.current?.value, username, title?.current?.value, blog?.current?.value, description?.current?.value );
       if ( data.status == 'success' ) {
         dispatch( removeBlogs() );
         dispatch( removeUserBlogs() );
@@ -28,7 +29,7 @@ export default function AddBlog () {
       }
     }
     else {
-      const data = await addBlog( username, title?.current?.value, blog?.current?.value );
+      const data = await addBlog( username, title?.current?.value, blog?.current?.value,description?.current?.value );
       if ( data.status == 'success' ) {
         dispatch( removeBlogs() );
         dispatch( removeUserBlogs() );
@@ -40,7 +41,7 @@ export default function AddBlog () {
   return (
     <form
       onSubmit={ handlesubmit }
-      className={ `w-full md:w-1/3 p-12 bg-gray-600  mx-auto right-0 left-0 rounded-lg bg-opacity-80 flex flex-col gap-10 mt-36` }>
+      className={ `w-full md:w-1/3 p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-10 mt-36` }>
       <h1
         className="font-medium text-3xl text-center">
         { updateBlog ? 'Update Blog' : 'Add Blog' }
@@ -58,12 +59,17 @@ export default function AddBlog () {
         ref={ title }
         placeholder="Title"
         className="outline outline-black outline-1 p-2" />
+      <input
+        type="text"
+        ref={description }
+        placeholder="Description"
+        className="outline outline-black outline-1 p-2" />
       <textarea
         ref={ blog }
         placeholder="Write Your Blog"
         className="outline outline-black outline-1 p-2 min-h-[20vh]" />
       <button
-        className=' bg-gray-300 py-3 font-medium text-lg'
+        className='bg-white py-3 font-medium text-lg'
         type='submit' >
         { updateBlog ? 'Update' : 'Post' }
       </button>

@@ -18,6 +18,7 @@ export default function Navbar () {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector( store => store?.user?.isLoggedIn );
+  const isAdmin = useSelector( store => store?.user?.isAdmin);
   const allblogs = useSelector( store => store?.blogs?.allBlogs );
 
   function searchWordInTitle ( arr, word ) {
@@ -25,7 +26,7 @@ export default function Navbar () {
   }
 
   const handlogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('Token');
     dispatch( removeUserBlogs() );
     dispatch( removeUser() );
   };
@@ -90,6 +91,11 @@ export default function Navbar () {
             { isLoggedIn ? <li>
               <NavLink to='/myblogs' >
                 My Blogs
+              </NavLink>
+            </li> : '' }
+            { isLoggedIn && isAdmin  ? <li>
+              <NavLink to='/users-list' >
+                Users
               </NavLink>
             </li> : '' }
           </ul>

@@ -20,13 +20,21 @@ export const validate = ( { name, password, confPassword } ) => {
 
 export const login = async ( username, password ) => {
   const result = await axios.post( import.meta.env.VITE_APP_LOGIN, { username, password } );
+  const Token = await result.headers[ 'authorization' ];
   const data = await result.data;
+  if ( data?.status == 'success' ) {
+    localStorage.setItem( 'Token', Token );
+  }
   return data;
 };
 
 export const Signup = async ( username, password ) => {
   const result = await axios.post( import.meta.env.VITE_APP_SIGNUP, { username, password } );
+  const Token = await result.headers[ 'authorization' ];
   const data = await result.data;
+  if ( data?.status == 'success' ) {
+    localStorage.setItem( 'Token', Token );
+  }
   return data;
 };
 

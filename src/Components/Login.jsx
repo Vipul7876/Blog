@@ -26,14 +26,13 @@ export default function Login () {
     if ( signup ) {
       const data = await Signup( name?.current?.value, password?.current?.value );
       if ( data?.status == 'success' ) {
-        localStorage.setItem('token', data?.User?.token );
         dispatch( addUser( name?.current?.value ) );
         navigate( '/' );
       }
     }
     else {
       const data = await login( name?.current?.value, password?.current?.value );
-      if ( data?.status == 'success' ) {
+      if ( data?.status == 'success' ) {        
         dispatch( addUser( name?.current?.value ) );
         navigate( '/' );
       }
@@ -42,10 +41,9 @@ export default function Login () {
   };
 
   return (
-    <div className='min-h-[85vh]'>
       <form
         onSubmit={ handlesubmit }
-        className={ ` w-full md:w-3/12 absolute p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-10 font-ubuntu ${ signup ? 'my-14' : 'my-36' }` }>
+        className={ ` w-full md:w-3/12 p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-10 font-ubuntu ${ signup ? 'my-28' : 'my-40' }` }>
         <h1
           className="text-3xl font-bold">{ signup ? 'Sign Up' : 'Log In' }</h1>
         <input
@@ -85,6 +83,5 @@ export default function Login () {
           </p>
         </div>
       </form>
-    </div>
   );
 }

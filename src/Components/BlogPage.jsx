@@ -43,7 +43,7 @@ export default function BlogPage () {
     <div className=' relative flex flex-col items-center pt-6 gap-10 font-ubuntu min-h-[85vh]'>
       <Modal show={ showModal } Delete={ () => setDeleteblog( !deleteblog ) } Cancel={ () => setShowModal( !showModal ) } />
       <h1 className='font-semibold text-4xl my-6'>{ thisItemData && thisItemData[ 0 ]?.title }</h1>
-      <p className='text-lg max-w-[40%] min-w-[400px]'>{ thisItemData && thisItemData[ 0 ]?.description }</p>
+      <p className='text-lg max-w-[40%] min-w-[400px] font-medium'>{ thisItemData && thisItemData[ 0 ]?.description }</p>
       <p className='text-lg max-w-[40%] min-w-[400px]'>{ thisItemData && thisItemData[ 0 ]?.blog }</p>
       <p className='text-xl font-semibold'>~ { thisItemData && thisItemData[ 0 ]?.username }</p>
       { isAdmin || isLoggedIn && user == thisItemData[ 0 ]?.username && id == thisItemData[ 0 ]?.blogId ?

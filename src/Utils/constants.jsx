@@ -45,7 +45,8 @@ export const Signup = async ( username, password ) => {
     }
     return data;
   } catch ( error ) {
-    return 'Invalid Credentials';
+    // return 'Invalid Credentials';
+    return error;
   }
 
 };

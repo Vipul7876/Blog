@@ -9,6 +9,7 @@ import Footer from './Footer';
 import About from './About';
 import SearchCards from './SearchCards'
 import Modal from './Modal';
+import Error from './Error';
 
 
-export { Home, Navbar, Login, BlogCards, BlogPage, AddBlog, MyBlogs, Footer, About, SearchCards,Modal };
+export { Home, Navbar, Login, BlogCards, BlogPage, AddBlog, MyBlogs, Footer, About, SearchCards,Modal,Error };

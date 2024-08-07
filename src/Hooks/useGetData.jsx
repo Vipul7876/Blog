@@ -3,7 +3,7 @@ import { addBlogs } from '../Utils/BlogSlice';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export default async function useGetData () {
+export default function useGetData () {
 
   const dispatch = useDispatch();
   const data = useSelector( ( store ) => store?.blogs?.allBlogs );

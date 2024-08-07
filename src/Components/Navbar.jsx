@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { removeUser } from "../Utils/UserSlice";
+import { removeAdmin } from "../Utils/UserSlice";
 import { removeUserBlogs } from "../Utils/BlogSlice";
 import { IoSearch } from "react-icons/io5";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ export default function Navbar () {
   const handlogout = () => {
     localStorage.removeItem('Token');
     dispatch( removeUserBlogs() );
-    dispatch( removeUser() );
+    dispatch( removeAdmin() );
   };
 
   const handleSearch = () => {

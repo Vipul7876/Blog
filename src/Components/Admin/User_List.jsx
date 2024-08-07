@@ -5,8 +5,6 @@ import UserCard from './UserCard';
 export default function User_List () {
 
   const List = useSelector( store => store?.admin?.allUsers );
-  console.log( List );
-
   useUsersList();
 
   return (

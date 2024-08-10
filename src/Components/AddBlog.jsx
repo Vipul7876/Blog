@@ -3,9 +3,13 @@ import { addBlog, updateUserBlog } from "../Utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeBlogs, removeUserBlogs } from "../Utils/BlogSlice";
+import { FadeLoader } from "react-spinners";
 
 export default function AddBlog () {
 
+
+  const [ showSpinner, setShowspinner ] = useState( false );
+  const [ color, setColor ] = useState( '#9b7ee5' );
   const dispatch = useDispatch();
   const [ updateBlog, setUpdateBlog ] = useState( false );
   const username = useSelector( store => store?.user?.User );
@@ -19,22 +23,37 @@ export default function AddBlog () {
 
   const handlesubmit = async ( e ) => {
     e.preventDefault();
+    setShowspinner( !showSpinner );
 
     if ( updateBlog ) {
-      const data = await updateUserBlog( blogId?.current?.value, username, title?.current?.value, blog?.current?.value, description?.current?.value );
-      if ( data.status == 'success' ) {
-        dispatch( removeBlogs() );
-        dispatch( removeUserBlogs() );
-        navigate( '/' );
+      try {
+        const data = await updateUserBlog( blogId?.current?.value, username, title?.current?.value, blog?.current?.value, description?.current?.value );
+        if ( data.status == 'success' ) {
+          setShowspinner( !showSpinner );
+          dispatch( removeBlogs() );
+          dispatch( removeUserBlogs() );
+          navigate( '/' );
+        }
+      } catch ( error ) {
+        setShowspinner( !showSpinner );
+        console.warn( 'Error:' + error );
+
       }
     }
     else {
-      const data = await addBlog( username, title?.current?.value, blog?.current?.value,description?.current?.value );
-      if ( data.status == 'success' ) {
-        dispatch( removeBlogs() );
-        dispatch( removeUserBlogs() );
-        navigate( '/' );
+      try {
+        const data = await addBlog( username, title?.current?.value, blog?.current?.value, description?.current?.value );
+        if ( data.status == 'success' ) {
+          setShowspinner( !showSpinner );
+          dispatch( removeBlogs() );
+          dispatch( removeUserBlogs() );
+          navigate( '/' );
+        }
+      } catch ( error ) {
+        setShowspinner( !showSpinner );
+        console.warn( 'Error:' + error );
       }
+
     }
   };
 
@@ -61,18 +80,28 @@ export default function AddBlog () {
         className="outline outline-black outline-1 p-2" />
       <input
         type="text"
-        ref={description }
+        ref={ description }
         placeholder="Description"
         className="outline outline-black outline-1 p-2" />
       <textarea
         ref={ blog }
         placeholder="Write Your Blog"
         className="outline outline-black outline-1 p-2 min-h-[20vh]" />
-      <button
+      { !showSpinner ? <button
         className='bg-white py-3 font-medium text-lg'
         type='submit' >
         { updateBlog ? 'Update' : 'Post' }
-      </button>
+      </button> : <button
+        className='bg-white py-3 pointer-events-none flex justify-center' >
+        <FadeLoader
+          className="mt-3 -mb-2"
+          height={ 6 }
+          margin={ -11 }
+          radius={ 1 }
+          width={ 2 }
+          color={ color } />
+      </button> }
+
       <div
         className='flex flex-col gap-6'>
         <p

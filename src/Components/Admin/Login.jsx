@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addAdmin } from '../../Utils/UserSlice';
 import axios from "axios";
+import { FadeLoader } from "react-spinners";
 
 export default function Login () {
 
+  const [ showSpinner, setShowspinner ] = useState( false );
+  const [ color, setColor ] = useState( '#9b7ee5' );
   const [ err, setErr ] = useState( null );
 
   const dispatch = useDispatch();
@@ -14,19 +17,25 @@ export default function Login () {
   const pass = useRef( null );
   const name = useRef( null );
 
-  
+
 
   const handlesubmit = async ( e ) => {
     e.preventDefault();
+    setShowspinner( !showSpinner );
 
     const username = name?.current?.value;
     const password = pass?.current?.value;
-
-    const result = await axios.post( import.meta.env.VITE_APP_ADMINLOGIN, { username, password } );
-    const data = await result?.data;
-    if ( data?.status == 'success' ) {
-      dispatch( addAdmin( name?.current?.value ) );
-      navigate( '/' );
+    try {
+      const result = await axios.post( import.meta.env.VITE_APP_ADMINLOGIN, { username, password } );
+      const data = await result?.data;
+      if ( data?.status == 'success' ) {
+        setShowspinner( !showSpinner );
+        dispatch( addAdmin( name?.current?.value ) );
+        navigate( '/' );
+      }
+    } catch ( error ) {
+      setShowspinner( !showSpinner );
+      setErr( error );
     }
   };
 
@@ -49,11 +58,20 @@ export default function Login () {
       { err ?
         <p
           className="text-red-500">{ 'Error :' + err }</p> : '' }
-      <button
+      {!showSpinner ? <button
         className=' bg-white py-3 font-medium text-lg'
         type='submit' >
         Admin Log In
-      </button>
+      </button> : <button
+        className='bg-white py-3 pointer-events-none flex justify-center' >
+        <FadeLoader
+          className="mt-3 -mb-2"
+          height={ 6 }
+          margin={ -11 }
+          radius={ 1 }
+          width={ 2 }
+          color={ color } />
+      </button>}
       <div className='flex flex-col gap-6'>
         <p className=" text-center hover:underline cursor-pointer">Forgot Password?</p>
       </div>

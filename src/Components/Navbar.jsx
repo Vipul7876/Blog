@@ -6,10 +6,13 @@ import { IoSearch } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { SearchCards } from "./Exports";
 import useCheckLogin from '../Hooks/useCheckLogin';
+import { FiLogOut } from "react-icons/fi";
+import { MdOutlineAccountCircle } from "react-icons/md";
 
 export default function Navbar () {
 
   const [ showSearch, setShowSearch ] = useState( false );
+  const [ showMenu, setShowMenu ] = useState( false );
   const [ clickedId, setClickedId ] = useState( null );
   const [ searchedText, setSearchedText ] = useState( null );
   const [ searchedResults, setSearchedResults ] = useState( null );
@@ -18,7 +21,8 @@ export default function Navbar () {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector( store => store?.user?.isLoggedIn );
-  const isAdmin = useSelector( store => store?.user?.isAdmin);
+  const isAdmin = useSelector( store => store?.user?.isAdmin );
+  const User = useSelector( store => store?.user?.User )?.split(' ');
   const allblogs = useSelector( store => store?.blogs?.allBlogs );
 
   function searchWordInTitle ( arr, word ) {
@@ -26,10 +30,16 @@ export default function Navbar () {
   }
 
   const handlogout = () => {
-    localStorage.removeItem('Token');
+    localStorage.removeItem( 'Token' );
     dispatch( removeUserBlogs() );
     dispatch( removeAdmin() );
+    setShowMenu( false );
   };
+
+  const handleAccount = () => {
+    navigate('/account')
+    setShowMenu( false );
+  }
 
   const handleSearch = () => {
     setShowSearch( !showSearch );
@@ -93,18 +103,40 @@ export default function Navbar () {
                 My Blogs
               </NavLink>
             </li> : '' }
-            { isLoggedIn && isAdmin  ? <li>
+            { isLoggedIn && isAdmin ? <li>
               <NavLink to='/users-list' >
                 Users
               </NavLink>
             </li> : '' }
           </ul>
-
         </div>
-        <button className="px-4 py-2 text-lg font-medium bg-white rounded-full"
-          onClick={ isLoggedIn ? handlogout : handlelogin }>
-          { !isLoggedIn ? 'Login' : 'Logout' }
-        </button>
+
+        { isLoggedIn ? (
+          <div className="relative flex flex-col py-5 px-14">
+            <button
+              className={ `absolute top-0 left-0 py-2 px-4 text-lg font-medium bg-white z-10 rounded-full ${showMenu ? 'hidden':''}` }
+              onClick={ () => setShowMenu( !showMenu ) }>
+              { User[0] }
+            </button>
+            { showMenu && (
+              <div className="absolute flex flex-col bg-white top-0 left-0 rounded-md outline outline-[1px] outline-black">
+                <button className="px-6 py-2 text-lg font-medium rounded-md hover:bg-gray-200" onClick={ () => setShowMenu( false ) }>
+                  { User ? User[0]:''}
+                </button>
+                <button className="py-2 px-2 text-lg font-medium rounded-md text-left hover:bg-gray-200" onClick={ handleAccount }>
+                  <span className="flex justify-start items-center gap-2 text-nowrap"><span><MdOutlineAccountCircle size={22} /></span> My Account</span>
+                </button>
+                <button className="px-3 py-2 text-lg font-medium rounded-md hover:bg-gray-200" onClick={ handlogout }>
+                  <span className="flex justify-start items-center gap-2"><span><FiLogOut /></span> Logout</span> 
+                </button>
+              </div>
+            ) }
+          </div>
+        ) : (
+          <button className="px-4 py-2 text-lg font-medium  bg-white rounded-full" onClick={ handlelogin }>
+            Login
+          </button>
+        ) }
       </div>
     </div>
   );

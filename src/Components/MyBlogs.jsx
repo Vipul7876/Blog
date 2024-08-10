@@ -12,6 +12,7 @@ export default function MyBlogs () {
 
   return (
     <div className="mb-14 pt-[5rem] px-[15rem] font-ubuntu">
+      <AddBlog />
       <div className="grid grid-cols-3 gap-x-10 gap-y-10 pt-10 px-6">
         {
           Blogs?.map( ( blog ) => {
@@ -21,7 +22,7 @@ export default function MyBlogs () {
           } )
         }
       </div>
-      <AddBlog />
+      
     </div>
   );
 }

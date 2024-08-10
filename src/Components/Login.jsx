@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, validate, Signup } from '../Utils/constants';
-import { addUser, removeAdmin } from '../Utils/UserSlice';
+import { addUser, addUserBio, removeAdmin } from '../Utils/UserSlice';
 
 export default function Login () {
 
@@ -30,6 +30,7 @@ export default function Login () {
       if ( data?.status == 'success' ) {
         dispatch( removeAdmin() );
         dispatch( addUser( name?.current?.value ) );
+        dispatch( addUserBio( data?.User?.bio ) );
         navigate( '/' );
       } else {
         setErr( data );
@@ -45,6 +46,7 @@ export default function Login () {
       if ( data?.status == 'success' ) {
         dispatch( removeAdmin() );
         dispatch( addUser( name?.current?.value ) );
+        dispatch( addUserBio( data?.User?.bio  ) );
         navigate( '/' );
       } else {
         setErr( data );

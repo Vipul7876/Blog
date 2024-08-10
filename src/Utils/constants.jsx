@@ -81,3 +81,13 @@ export const deleteUser = async ( username ) => {
     console.log( `Can't delete the User` );
   }
 };
+
+export const addBio = async ( username, bio ) => {
+  try {
+    const result = await axios.post( import.meta.env.VITE_APP_ADDBIO, { username, bio } );
+    const data = await result.data;
+    return data;
+  } catch ( error ) {
+    console.log( error );
+  }
+};

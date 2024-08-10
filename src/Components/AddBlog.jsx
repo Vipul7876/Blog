@@ -41,7 +41,7 @@ export default function AddBlog () {
   return (
     <form
       onSubmit={ handlesubmit }
-      className={ `w-full md:w-1/3 p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-10 mt-36` }>
+      className={ `w-full md:w-1/2 p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-10` }>
       <h1
         className="font-medium text-3xl text-center">
         { updateBlog ? 'Update Blog' : 'Add Blog' }

@@ -6,6 +6,7 @@ const userSlice = createSlice( {
     isLoggedIn: false,
     User: null,
     isAdmin: false,
+    userBio: null,
   },
   reducers: {
     addUser: ( state, action ) => {
@@ -17,8 +18,12 @@ const userSlice = createSlice( {
       state.isAdmin = true;
       state.User = action.payload;
     },
+    addUserBio: ( state, action ) => {
+      state.userBio = action.payload;
+    },
     removeUser: ( state ) => {
       state.isLoggedIn = false;
+      state.userBio = null;
       state.User = null;
     },
     removeAdmin: ( state ) => {
@@ -26,8 +31,11 @@ const userSlice = createSlice( {
       state.isAdmin = false;
       state.User = null;
     },
+    removeUserBio: ( state ) => {
+      state.userBio = null;
+    },
   }
 } );
 
-export const { addUser, removeUser, removeAdmin, addAdmin } = userSlice.actions;
+export const { addUser, removeUser, removeAdmin, addAdmin, addUserBio, removeUserBio } = userSlice.actions;
 export default userSlice.reducer;

@@ -32,6 +32,8 @@ export default function Login () {
         setShowspinner( !showSpinner );
         dispatch( addAdmin( name?.current?.value ) );
         navigate( '/' );
+      } else {
+        setShowspinner( !showSpinner );
       }
     } catch ( error ) {
       setShowspinner( !showSpinner );

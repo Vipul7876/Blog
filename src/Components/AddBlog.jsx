@@ -33,6 +33,8 @@ export default function AddBlog () {
           dispatch( removeBlogs() );
           dispatch( removeUserBlogs() );
           navigate( '/' );
+        } else {
+          setShowspinner( !showSpinner );
         }
       } catch ( error ) {
         setShowspinner( !showSpinner );
@@ -48,6 +50,8 @@ export default function AddBlog () {
           dispatch( removeBlogs() );
           dispatch( removeUserBlogs() );
           navigate( '/' );
+        } else {
+          setShowspinner( !showSpinner );
         }
       } catch ( error ) {
         setShowspinner( !showSpinner );

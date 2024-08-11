@@ -30,6 +30,11 @@ export default function Footer () {
               Help
             </NavLink>
           </li>
+          <li>
+            <NavLink to='/admin' >
+              Admin
+            </NavLink>
+          </li>
         </ul>
       </div>
       <div className=" flex flex-col">

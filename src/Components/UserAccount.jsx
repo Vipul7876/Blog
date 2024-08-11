@@ -34,7 +34,7 @@ export default function UserAccount () {
   return (
     <div className="font-ubuntu flex flex-col h-[40rem] items-center py-20 ">
       <div className=" flex flex-col gap-10 items-center">
-        <h1 className="text-5xl font-semibold">Vipul Sharma</h1>
+        <h1 className="text-5xl font-semibold">{ username }</h1>
         { userBio ? <p className="font-medium text-lg p-3 outline outline-[1px] outline-gray-300 rounded-lg max-w-[30rem]">{ userBio }</p> : <textarea
           ref={ bio }
           placeholder="Bio"

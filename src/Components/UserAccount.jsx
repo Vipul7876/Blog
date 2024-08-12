@@ -34,18 +34,18 @@ export default function UserAccount () {
   return (
     <div className="font-ubuntu flex flex-col h-[40rem] items-center py-20 ">
       <div className=" flex flex-col gap-10 items-center">
-        <h1 className="text-5xl font-semibold">{ username }</h1>
-        { userBio ? <p className="font-medium text-lg p-3 outline outline-[1px] outline-gray-300 rounded-lg max-w-[30rem]">{ userBio }</p> : <textarea
+        <h1 className="text-3xl md:text-5xl font-semibold">{ username }</h1>
+        { userBio ? <p className="font-medium md:text-lg p-3 outline outline-[1px] outline-gray-300 rounded-lg max-w-[20rem]  md:max-w-[30rem]">{ userBio }</p> : <textarea
           ref={ bio }
           placeholder="Bio"
-          className="outline outline-[1px] outline-gray-300 p-3 w-96 " /> }
+          className="outline outline-[1px] outline-gray-300 p-3 w-60 md:w-96 " /> }
         <div className="flex py-3 px-5 outline outline-[1px] outline-gray-300 hover:bg-gray-200 items-center rounded-lg gap-32 cursor-pointer">
-          <h1 className="font-medium text-3xl">Total Blogs</h1>
-          <p className="font-medium text-4xl">{ totalCount }</p>
+          <h1 className="font-medium text-xl md:text-3xl">Total Blogs</h1>
+          <p className="font-medium text-2xl md:text-4xl">{ totalCount }</p>
         </div>
         { userBio ? '' : <button
           onClick={ handleUpdate }
-          className="bg-[#9b7ee5] font-medium text-lg text-white py-2 px-3 rounded-full">Update</button> }
+          className="bg-[#9b7ee5] font-medium md:text-lg text-white py-2 px-3 rounded-full">Update</button> }
       </div>
     </div>
   );

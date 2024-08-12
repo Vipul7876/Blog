@@ -44,30 +44,30 @@ export default function Login () {
   return (
     <form
       onSubmit={ handlesubmit }
-      className={ ` w-full md:w-3/12 p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-10 font-ubuntu ${ 'my-40' }` }>
+      className={ ` w-[85%] md:w-1/3 2xl:w-3/12 p-6 md:p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-5 md:gap-10 font-ubuntu my-28 md:my-40 ` }>
       <h1
-        className="text-3xl font-bold">{ 'Log In' }</h1>
+        className="text-lg md:text-3xl font-bold">{ 'Log In' }</h1>
       <input
         type='text'
         placeholder={ `Username` }
         ref={ name }
-        className='p-3 outline-none' />
+        className='p-2 md:p-3 text-sm md:text-base outline-none' />
       <input
         type='password'
         placeholder='Password'
         ref={ pass }
-        className='p-3 outline-none' />
+        className='p-2 md:p-3 text-sm md:text-base outline-none' />
       { err ?
         <p
           className="text-red-500">{ 'Error :' + err }</p> : '' }
       {!showSpinner ? <button
-        className=' bg-white py-3 font-medium text-lg'
+        className=' bg-white py-2 md:py-3 font-medium text-sm md:text-lg'
         type='submit' >
         Admin Log In
       </button> : <button
-        className='bg-white py-3 pointer-events-none flex justify-center' >
+        className='bg-white py-2 md:py-3 pointer-events-none flex justify-center' >
         <FadeLoader
-          className="mt-3 -mb-2"
+          className="ml-4 md:ml-0 mt-3 -mb-3 md:-mb-2"
           height={ 6 }
           margin={ -11 }
           radius={ 1 }
@@ -75,7 +75,7 @@ export default function Login () {
           color={ color } />
       </button>}
       <div className='flex flex-col gap-6'>
-        <p className=" text-center hover:underline cursor-pointer">Forgot Password?</p>
+        <p className="text-xs md:text-base text-center hover:underline cursor-pointer">Forgot Password?</p>
       </div>
     </form>
   );

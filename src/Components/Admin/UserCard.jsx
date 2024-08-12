@@ -21,9 +21,9 @@ export default function UserCard ( { user } ) {
   };
 
   return (
-    <div className=" border-b-[1px] border-x-[1px] border-black px-6 py-4 grid grid-cols-3 grid-rows-1 items-center">
+    <div className=" border-b-[1px] border-x-[1px] border-black px-4 md:px-6 py-2 md:py-4 grid grid-cols-3 grid-rows-1 items-center">
       <div className="flex justify-start items-center">
-        <h1 className="font-medium text-lg alig">{ user?.username }</h1>
+        <h1 className="font-medium md:text-lg alig">{ user?.username }</h1>
       </div>
       <div className="flex justify-center items-center">
         <p className="">{ totalCount }</p>
@@ -31,7 +31,7 @@ export default function UserCard ( { user } ) {
       <div className="flex justify-end items-center">
         <button
           onClick={ handledelete }
-          className="bg-red-500 text-white p-2 px-4">Delete</button>
+          className="bg-red-500 text-white text-xs md:text-base p-2 px-4">Delete</button>
       </div>
     </div>
   );

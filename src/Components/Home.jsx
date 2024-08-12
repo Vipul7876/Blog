@@ -12,8 +12,8 @@ export default function Home () {
   const blogs = useSelector( store => store?.blogs?.allBlogs );
 
   return (
-    blogs ? <div className="flex pl-[30%] pt-[5%]">
-      <div className="flex flex-col justify-start gap-y-6 w-2/5 mb-[10rem]">
+    blogs ? <div className="flex pl-[20%] md:pl-[30%] pt-[5%]">
+      <div className="flex flex-col justify-start gap-y-6 w-3/4 md:w-2/5 mb-[5rem] md:mb-[10rem]">
         { blogs?.map( ( blog ) => {
           return ( <NavLink key={ blog?.blogId } to={ `/blog/${ blog?.blogId }` } >
             <BlogCards title={ blog?.title } author={ blog?.username } timeDate={ blog?.timeDate } description={ blog?.description } />

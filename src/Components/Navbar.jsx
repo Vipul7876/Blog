@@ -8,6 +8,7 @@ import { SearchCards } from "./Exports";
 import useCheckLogin from '../Hooks/useCheckLogin';
 import { FiLogOut } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function Navbar () {
 
@@ -16,13 +17,14 @@ export default function Navbar () {
   const [ clickedId, setClickedId ] = useState( null );
   const [ searchedText, setSearchedText ] = useState( null );
   const [ searchedResults, setSearchedResults ] = useState( null );
+  const [ showHam, setShowHam ] = useState( 'hidden' );
 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector( store => store?.user?.isLoggedIn );
   const isAdmin = useSelector( store => store?.user?.isAdmin );
-  const User = useSelector( store => store?.user?.User )?.split(' ');
+  const User = useSelector( store => store?.user?.User )?.split( ' ' );
   const allblogs = useSelector( store => store?.blogs?.allBlogs );
 
   function searchWordInTitle ( arr, word ) {
@@ -34,12 +36,14 @@ export default function Navbar () {
     dispatch( removeUserBlogs() );
     dispatch( removeAdmin() );
     setShowMenu( false );
+    setShowHam( 'hidden' )
   };
 
   const handleAccount = () => {
-    navigate('/account')
+    navigate( '/account' );
     setShowMenu( false );
-  }
+    setShowHam( 'hidden' )
+  };
 
   const handleSearch = () => {
     setShowSearch( !showSearch );
@@ -50,6 +54,7 @@ export default function Navbar () {
 
   const handlelogin = () => {
     navigate( '/login' );
+    setShowHam( 'hidden' )
   };
 
   useEffect( () => {
@@ -59,22 +64,35 @@ export default function Navbar () {
       setClickedId( null );
     }
   }, [ clickedId ] );
+  
+  useEffect( () => {
+    if ( showHam === 'block' ) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    // Clean up the effect when component unmounts or on state change
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [ showHam ] );
 
   useCheckLogin();
 
   return (
-    <div className='flex justify-between items-center bg-[#4c3290] py-6 px-24 font-ubuntu'>
-      <h1 className="font-semibold text-3xl text-white playwrite-ar-Blog">
+    <div className='flex justify-between items-center bg-[#4c3290] py-3 md:py-6 px-2 md:px-24 font-ubuntu relative'>
+      <h1 className="font-semibold text-lg md:text-3xl text-white playwrite-ar-Blog">
         <NavLink to='/'>
           Blogg
         </NavLink>
       </h1>
-      <div className="w-[30%] flex items-center relative">
+      <div className="w-[45%] md:w-[30%] flex items-center relative">
 
         {/* ------------------------Search--------------------- */ }
         <input
           onChange={ ( e ) => setSearchedText( e.target.value ) }
-          className="w-full py-2 pl-4 pr-14 rounded-full focus:outline-none z-20"
+          className="w-full py-1 md:py-2 pl-4 pr-14 rounded-full focus:outline-none z-20"
           type="text"
           placeholder="Search" />
         <button
@@ -90,8 +108,8 @@ export default function Navbar () {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-6">
-        <div className="text-lg font-medium">
+      <div className="hidden md:flex justify-center items-center gap-3 md:gap-6">
+        <div className="text-base md:text-lg font-medium">
           <ul className="flex gap-6 text-white">
             <li>
               <NavLink to='/' >
@@ -112,31 +130,72 @@ export default function Navbar () {
         </div>
 
         { isLoggedIn ? (
-          <div className="relative flex flex-col py-5 px-14">
+          <div className="hidden relative md:flex flex-col py-5 px-14">
             <button
-              className={ `absolute top-0 left-0 py-2 px-4 text-lg font-medium bg-white z-10 rounded-full ${showMenu ? 'hidden':''}` }
+              className={ `absolute top-0 left-0 py-2 px-4 text-lg font-medium bg-white z-10 rounded-full ${ showMenu ? 'hidden' : '' }` }
               onClick={ () => setShowMenu( !showMenu ) }>
-              { User[0] }
+              { User[ 0 ] }
             </button>
             { showMenu && (
-              <div className="absolute flex flex-col bg-white top-0 left-0 rounded-md outline outline-[1px] outline-black">
+              <div className="hidden absolute md:flex flex-col bg-white top-0 left-0 rounded-md outline outline-[1px] outline-black">
                 <button className="px-6 py-2 text-lg font-medium rounded-md hover:bg-gray-200" onClick={ () => setShowMenu( false ) }>
-                  { User ? User[0]:''}
+                  { User ? User[ 0 ] : '' }
                 </button>
                 <button className="py-2 px-2 text-lg font-medium rounded-md text-left hover:bg-gray-200" onClick={ handleAccount }>
-                  <span className="flex justify-start items-center gap-2 text-nowrap"><span><MdOutlineAccountCircle size={22} /></span> My Account</span>
+                  <span className="flex justify-start items-center gap-2 text-nowrap"><span><MdOutlineAccountCircle size={ 22 } /></span> My Account</span>
                 </button>
                 <button className="px-3 py-2 text-lg font-medium rounded-md hover:bg-gray-200" onClick={ handlogout }>
-                  <span className="flex justify-start items-center gap-2"><span><FiLogOut /></span> Logout</span> 
+                  <span className="flex justify-start items-center gap-2"><span><FiLogOut /></span> Logout</span>
                 </button>
               </div>
             ) }
           </div>
         ) : (
-          <button className="px-4 py-2 text-lg font-medium  bg-white rounded-full" onClick={ handlelogin }>
+          <button className="hidden md:block px-2 md:px-4 py-1 md:py-2 md:text-lg font-medium  bg-white rounded-full" onClick={ handlelogin }>
             Login
           </button>
         ) }
+      </div>
+      <div className="md:hidden">
+        <button
+          className="flex justify-center items-center"
+          onClick={ () => setShowHam( 'block' ) }>
+          <RxHamburgerMenu color="white" className="w-[1.3rem] h-[1.3rem]" />
+        </button>
+        <div className={ `${ showHam } bg-[#4c3290] absolute flex justify-center items-center left-0 top-0 w-full h-[100vh] z-50 ` }>
+          <button
+            onClick={ () => setShowHam( 'hidden' ) }
+            className=" absolute flex justify-center items-center right-3 top-5">
+            <p className=" text-white">
+              <img className="w-4 h-4" src="../src/assets/cross-15.svg" alt="" />
+            </p>
+          </button>
+          <div className="absolute">
+            <ul className=" flex flex-col gap-4 text-white">
+              <li>
+                <NavLink to='/' onClick={ () => setShowHam( 'hidden' ) } >
+                  Home
+                </NavLink>
+              </li>
+              { isLoggedIn ? <><li>
+                <NavLink to='/myblogs' onClick={ () => setShowHam( 'hidden' ) } >
+                  My Blogs
+                </NavLink>
+              </li><li onClick={ handleAccount }>My Account</li> </>: '' }
+              { isLoggedIn && isAdmin ? <li>
+                <NavLink to='/users-list' >
+                  Users
+                </NavLink>
+              </li> : '' }
+              { isLoggedIn ? <li onClick={ handlogout }>
+                <span className="flex justify-start items-center gap-2"><span><FiLogOut /></span> Logout</span>
+              </li> : <li onClick={ handlelogin }>
+                Login
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

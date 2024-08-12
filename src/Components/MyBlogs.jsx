@@ -11,9 +11,9 @@ export default function MyBlogs () {
   useUserBlogs();
 
   return (
-    <div className="mb-14 pt-[5rem] px-[15rem] font-ubuntu">
+    <div className="mb-14 pt-[5rem] px-4 md:px-[15rem] font-ubuntu">
       <AddBlog />
-      <div className="grid grid-cols-3 gap-x-10 gap-y-10 pt-10 px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-x-10 gap-y-10 pt-10 px-6">
         {
           Blogs?.map( ( blog ) => {
             return ( <NavLink key={ blog?.blogId } to={ `/blog/${ blog?.blogId }` } >

@@ -9,6 +9,7 @@ import useCheckLogin from '../Hooks/useCheckLogin';
 import { FiLogOut } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
+import Cross from '../assets/cross-15.svg';
 
 export default function Navbar () {
 
@@ -167,7 +168,7 @@ export default function Navbar () {
             onClick={ () => setShowHam( 'hidden' ) }
             className=" absolute flex justify-center items-center right-3 top-5">
             <p className=" text-white">
-              <img className="w-4 h-4" src="../src/assets/cross-15.svg" alt="" />
+              <img className="w-4 h-4" src={ Cross } alt="Cross" />
             </p>
           </button>
           <div className="absolute">

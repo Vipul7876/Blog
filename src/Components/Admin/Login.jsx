@@ -21,7 +21,7 @@ export default function Login () {
 
   const handlesubmit = async ( e ) => {
     e.preventDefault();
-    setShowspinner( !showSpinner );
+    setShowspinner( ( prev ) => !prev );
 
     const username = name?.current?.value;
     const password = pass?.current?.value;
@@ -29,14 +29,14 @@ export default function Login () {
       const result = await axios.post( import.meta.env.VITE_APP_ADMINLOGIN, { username, password } );
       const data = await result?.data;
       if ( data?.status == 'success' ) {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         dispatch( addAdmin( name?.current?.value ) );
         navigate( '/' );
       } else {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
       }
     } catch ( error ) {
-      setShowspinner( !showSpinner );
+      setShowspinner( ( prev ) => !prev );
       setErr( error );
     }
   };

@@ -11,8 +11,6 @@ export default function Login () {
   const [ err, setErr ] = useState( null );
   const [ showSpinner, setShowspinner ] = useState( false );
   const [ color, setColor ] = useState( '#9b7ee5' );
-  
-  const isAdmin = useSelector( state => state?.user?.isAdmin );
 
   const navigate = useNavigate();
 
@@ -24,41 +22,43 @@ export default function Login () {
 
   const handlesubmit = async ( e ) => {
     e.preventDefault();
-    setShowspinner( !showSpinner );
+    setShowspinner( ( prev ) => !prev );
+
 
     if ( signup ) {
       const msg = validate( name?.current?.value, password?.current?.value, confPassword?.current?.value, 'signup' );
       setErr( msg );
       if ( msg ) return;
       const data = await Signup( name?.current?.value, password?.current?.value );
+
       if ( data?.status == 'success' ) {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         dispatch( removeAdmin() );
         dispatch( addUser( name?.current?.value ) );
         dispatch( addUserBio( data?.User?.bio ) );
         navigate( '/' );
       } else {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         setErr( data );
       }
     }
     else {
       const msg = validate( name?.current?.value, password?.current?.value, confPassword?.current?.value );
       setErr( msg );
-      if ( msg ) {
-        setShowspinner( !showSpinner );
+      if ( msg ) {     
+        setShowspinner( ( prev ) => !prev );
         return
       }
       const data = await login( name?.current?.value, password?.current?.value );
 
       if ( data?.status == 'success' ) {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         dispatch( removeAdmin() );
         dispatch( addUser( name?.current?.value ) );
         dispatch( addUserBio( data?.User?.bio  ) );
         navigate( '/' );
       } else {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         setErr( data );
       }
 
@@ -68,7 +68,7 @@ export default function Login () {
   return (
     <form
       onSubmit={ handlesubmit }
-      className={ ` w-[80%] md:w-1/3 p-6 md:p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-6 md:gap-10 font-ubuntu ${ signup ? 'my-10 md:my-28' : 'my-10 md:my-40' }` }>
+      className={ ` w-[80%] md:w-1/3 2xl:w-1/4 p-6 md:p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-6 md:gap-10 font-ubuntu ${ signup ? 'my-10 md:my-28' : 'my-10 md:my-40' }` }>
       <h1
         className="text-2xl md:text-3xl font-bold">{ signup ? 'Sign Up' : 'Log In' }</h1>
       <input

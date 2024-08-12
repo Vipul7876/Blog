@@ -25,9 +25,9 @@ export default function AddBlog () {
 
   const handlesubmit = async ( e ) => {
     e.preventDefault();
-    setShowspinner( !showSpinner );
+    setShowspinner( ( prev ) => !prev );
     if ( !title.current?.value && !blog.current?.value && !description.current?.value ) {
-      setShowspinner( false );
+      setShowspinner( ( prev ) => !prev );
       setErr( 'Please fill the form first!' )
       return 
     }
@@ -36,15 +36,15 @@ export default function AddBlog () {
       try {
         const data = await updateUserBlog( blogId?.current?.value, username, title?.current?.value, blog?.current?.value, description?.current?.value );
         if ( data.status == 'success' ) {
-          setShowspinner( !showSpinner );
+          setShowspinner( ( prev ) => !prev );
           dispatch( removeBlogs() );
           dispatch( removeUserBlogs() );
           navigate( '/' );
         } else {
-          setShowspinner( !showSpinner );
+          setShowspinner( ( prev ) => !prev );
         }
       } catch ( error ) {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         setErr( 'error:' + error );
 
       }
@@ -53,15 +53,15 @@ export default function AddBlog () {
       try {
         const data = await addBlog( username, title?.current?.value, blog?.current?.value, description?.current?.value );
         if ( data.status == 'success' ) {
-          setShowspinner( !showSpinner );
+          setShowspinner( ( prev ) => !prev );
           dispatch( removeBlogs() );
           dispatch( removeUserBlogs() );
           navigate( '/' );
         } else {
-          setShowspinner( !showSpinner );
+          setShowspinner( ( prev ) => !prev );
         }
       } catch ( error ) {
-        setShowspinner( !showSpinner );
+        setShowspinner( ( prev ) => !prev );
         setErr( 'error:' + error );
       }
 

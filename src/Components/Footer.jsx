@@ -49,18 +49,18 @@ export default function Footer () {
       <div className=" flex flex-col">
         <ul className="flex flex-col gap-3 md:gap-4 xl:gap-6 text-xs md:text-lg md:font-medium items-end md:items-start">
           <li className="flex items-center gap-2">
-            <NavLink to='/' >
+            <NavLink to='mailto:vipulsharma3001@gmail.com' >
               <MdEmail size={'1rem'}/>
             </NavLink><span className="text-nowrap hidden md:block">vipulsharma3001@gmail.com</span>
           </li>
           <li className="flex items-center gap-2">
-            <NavLink to='/' >
+            <NavLink to='tel:+917876127982' >
               <IoCallSharp size={`1rem`} />
             </NavLink>
             <span className="text-nowrap hidden md:block">+91 78761-27982</span>
           </li>
           <li className="flex items-center gap-2">
-            <NavLink to='/' >
+            <NavLink to='https://maps.app.goo.gl/E11fw39UximLChJF6' target='_blank' >
               <MdLocationOn size={`1.2rem`} />
             </NavLink>
             <span className="min-w-[7rem] hidden md:block">Nangal, Rupnagar, Punjab(140133)</span>

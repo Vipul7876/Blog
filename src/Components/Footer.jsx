@@ -47,15 +47,15 @@ export default function Footer () {
         </ul>
       </div>
       <div className=" flex flex-col">
-        <ul className="flex flex-col gap-4 md:gap-4 xl:gap-6 text-xs md:text-lg md:font-medium items-end md:items-start">
+        <ul className="flex flex-col gap-3 md:gap-4 xl:gap-6 text-xs md:text-lg md:font-medium items-end md:items-start">
           <li className="flex items-center gap-2">
             <NavLink to='/' >
-              <MdEmail/>
+              <MdEmail size={'1rem'}/>
             </NavLink><span className="text-nowrap hidden md:block">vipulsharma3001@gmail.com</span>
           </li>
           <li className="flex items-center gap-2">
             <NavLink to='/' >
-              <IoCallSharp />
+              <IoCallSharp size={`1rem`} />
             </NavLink>
             <span className="text-nowrap hidden md:block">+91 78761-27982</span>
           </li>

@@ -81,7 +81,7 @@ export default function Navbar () {
   useCheckLogin();
 
   return (
-    <div className='flex justify-between items-center bg-[#4c3290] py-3 md:py-6 px-2 md:px-24 font-ubuntu relative'>
+    <div className='flex justify-between items-center bg-[#4c3290] py-3 md:py-6 px-4 md:px-24 font-ubuntu relative'>
       <h1 className="font-semibold text-lg md:text-3xl text-white playwrite-ar-Blog">
         <NavLink to='/'>
           Blogg

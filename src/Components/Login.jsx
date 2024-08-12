@@ -75,15 +75,15 @@ export default function Login () {
         type='text'
         placeholder={ `Username` }
         ref={ name }
-        className='p-2 md:p-3 outline-none text-sm' />
+        className='p-2 md:p-3 outline-none text-sm md:text-lg' />
       <input
         type='password'
         placeholder='Password'
         ref={ password }
-        className='p-2 md:p-3 outline-none text-sm' />
+        className='p-2 md:p-3 outline-none text-sm md:text-lg' />
       { signup ?
         <input
-          className='p-2 md:p-3 outline-none text-sm'
+          className='p-2 md:p-3 outline-none text-sm md:text-lg'
           type='password'
           placeholder='Confirm Password'
           ref={ confPassword }

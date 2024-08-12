@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeBlogs, removeUserBlogs } from "../Utils/BlogSlice";
 import { FadeLoader } from "react-spinners";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 export default function AddBlog () {
 
-
+  const [ blogValue, setBlogValue ] = useState( '' );
   const [ showSpinner, setShowspinner ] = useState( false );
   const [ color, setColor ] = useState( '#9b7ee5' );
   const [ updateBlog, setUpdateBlog ] = useState( false );
@@ -23,13 +25,31 @@ export default function AddBlog () {
   const blogId = useRef( null );
   const description = useRef( null );
 
+  const modules = {
+    toolbar: [
+      [ { 'font': ['Sans Serif'] } ],
+      [ { 'header': [ 1, 2, 3, 4, 5, 6, false ] } ],
+      [ { 'size': [ 'small', false, 'large', 'huge' ] } ],
+      [ 'bold', 'italic', 'underline', 'strike' ],
+      [ { 'color': [] }, { 'background': [] } ],
+      [ { 'script': 'sub' }, { 'script': 'super' } ],
+      [ { 'list': 'ordered' }, { 'list': 'bullet' } ],
+      [ { 'indent': '-1' }, { 'indent': '+1' } ],
+      [ { 'direction': 'rtl' } ],
+      [ 'blockquote', 'code-block' ],
+      [ { 'align': [] } ],
+      [ 'link' ],
+      [ 'clean' ] // remove formatting button
+    ]
+  };
+
   const handlesubmit = async ( e ) => {
     e.preventDefault();
     setShowspinner( ( prev ) => !prev );
     if ( !title.current?.value && !blog.current?.value && !description.current?.value ) {
       setShowspinner( ( prev ) => !prev );
-      setErr( 'Please fill the form first!' )
-      return 
+      setErr( 'Please fill the form first!' );
+      return;
     }
 
     if ( updateBlog ) {
@@ -51,7 +71,7 @@ export default function AddBlog () {
     }
     else {
       try {
-        const data = await addBlog( username, title?.current?.value, blog?.current?.value, description?.current?.value );
+        const data = await addBlog( username, title?.current?.value, blogValue, description?.current?.value );
         if ( data.status == 'success' ) {
           setShowspinner( ( prev ) => !prev );
           dispatch( removeBlogs() );
@@ -71,7 +91,7 @@ export default function AddBlog () {
   return (
     <form
       onSubmit={ handlesubmit }
-      className={ `w-[85%] md:w-3/5 2xl:w-1/2 p-6 md:p-12 bg-[#9b7ee5]  mx-auto right-0 left-0 rounded-lg flex flex-col gap-6 md:gap-10` }>
+      className={ `w-[100%] md:w-[35rem] 2xl:w-[52rem] p-6 md:p-12 bg-[#9b7ee5] mx-auto right-0 left-0 rounded-lg flex flex-col gap-6 md:gap-10` }>
       <h1
         className="font-medium text-xl md:text-3xl text-center">
         { updateBlog ? 'Update Blog' : 'Add Blog' }
@@ -90,14 +110,19 @@ export default function AddBlog () {
         placeholder="Title"
         className="outline outline-black outline-1 text-sm md:text-base p-2" />
       <input
+        maxLength={54}
         type="text"
         ref={ description }
-        placeholder="Description"
+        placeholder="Description     (shown below the title at card)"
         className="outline outline-black outline-1 text-sm md:text-base p-2" />
-      <textarea
-        ref={ blog }
-        placeholder="Write Your Blog"
-        className="outline outline-black outline-1 text-sm md:text-base p-2 min-h-[20vh]" />
+      <div className="bg-white outline outline-black outline-1 text-sm md:text-base p-2 max-h-[100vh]">
+        <ReactQuill
+          style={{maxHeight: '50vh', overflowY: 'scroll'}}
+          modules={ modules }
+          theme="snow"
+          value={ blogValue }
+          onChange={ setBlogValue } />
+      </div>
       { err ?
         <p
           className="text-red-600 font-medium">{ 'Error : ' + err }</p> : '' }

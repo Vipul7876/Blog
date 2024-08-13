@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addBio } from "../Utils/constants";
+import { addBio, deleteUser } from "../Utils/constants";
 import { addUserBio } from "../Utils/UserSlice";
 import useGetUserBio from '../Hooks/useGetUserBio';
+import { removeAdmin } from "../Utils/UserSlice";
 
 export default function UserAccount () {
 
@@ -29,6 +30,12 @@ export default function UserAccount () {
     }
   };
 
+  const handleDelete = async() => {
+    const data = await deleteUser( username );
+    dispatch( removeAdmin() );
+    console.log( data?.User + ' is deleted' );
+  }
+
   useGetUserBio();
 
   return (
@@ -43,9 +50,14 @@ export default function UserAccount () {
           <h1 className="font-medium text-xl md:text-3xl">Total Blogs</h1>
           <p className="font-medium text-2xl md:text-4xl">{ totalCount }</p>
         </div>
-        { userBio ? '' : <button
-          onClick={ handleUpdate }
-          className="bg-[#9b7ee5] font-medium md:text-lg text-white py-2 px-3 rounded-full">Update</button> }
+        <div className="flex gap-6">
+          { userBio ? '' : <button
+            onClick={ handleUpdate }
+            className="bg-[#9b7ee5] py-3 px-5 font-medium my-2 text-white rounded-full">Update</button> }
+          <button
+            onClick={handleDelete}
+            className="bg-red-600 py-3 px-5 font-medium my-2 text-white rounded-full">Delete</button>
+        </div>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import SearchCards from './SearchCards'
 import Modal from './Modal';
 import Error from './Error';
 import UserAccount from './UserAccount';
+import UpdateBlog from './UpdateBlog';
 
 
-export { Home, Navbar, Login, BlogCards, BlogPage, AddBlog, MyBlogs, Footer, About, SearchCards, Modal, Error, UserAccount };
+export { Home, Navbar, Login, BlogCards, BlogPage, AddBlog, MyBlogs, Footer, About, SearchCards, Modal, Error, UserAccount, UpdateBlog };

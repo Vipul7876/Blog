@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { About, BlogPage, Error, Footer, Home, Login, MyBlogs, Navbar, UserAccount } from './Components/Exports';
+import { About, BlogPage, Error, Footer, Home, Login, MyBlogs, Navbar, UpdateBlog, UserAccount } from './Components/Exports';
 import store from './Utils/Store';
 import PrivateRoute from './Components/PrivateRoute';
 import AdminLogin from './Components/Admin/Login';
@@ -17,6 +17,7 @@ function App () {
           <Route path='/' element={ <Home /> } />
           <Route path='/login' element={ <Login /> } />
           <Route path='/myblogs' element={ <PrivateRoute element={ <MyBlogs /> } /> } />
+          <Route path='/blog/:id/update' element={ <PrivateRoute element={ <UpdateBlog /> } /> } />
           <Route path='/blog/:id' element={ <BlogPage /> } />
           <Route path='/about' element={ <About /> } />
           <Route path='/admin' element={ <AdminLogin /> } />

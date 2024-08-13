@@ -1,28 +1,49 @@
-import { useRef, useState } from "react";
-import { addBlog, updateUserBlog } from "../Utils/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { removeBlogs, removeUserBlogs } from "../Utils/BlogSlice";
-import { FadeLoader } from "react-spinners";
 import ReactQuill from "react-quill";
+import { FadeLoader } from "react-spinners";
 import 'react-quill/dist/quill.snow.css';
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { removeBlogs, removeUserBlogs } from "../Utils/BlogSlice";
+import { updateUserBlog } from "../Utils/constants";
 
-export default function AddBlog () {
+export default function UpdateBlog () {
 
-  const [ blogValue, setBlogValue ] = useState( '' );
+  const [ blogUsername, setBlogUsername ] = useState( null );
   const [ showSpinner, setShowspinner ] = useState( false );
   const [ color, setColor ] = useState( '#9b7ee5' );
-  const [ updateBlog, setUpdateBlog ] = useState( false );
   const [ err, setErr ] = useState( null );
 
-  const dispatch = useDispatch();
-  const username = useSelector( store => store?.user?.User );
+  const [ title, setTitle ] = useState();
+  const [ blog, setBlog ] = useState();
+  const [ blogId, setBlogId ] = useState( '' );
+  const [ description, setDescription ] = useState();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const title = useRef( null );
-  const blog = useRef( null );
-  const description = useRef( null );
+
+  const { id } = useParams();
+
+  const blogs = useSelector( store => store?.blogs?.allBlogs );
+  const user = useSelector( store => store?.user?.User );
+  const isAdmin = useSelector( store => store?.user?.isAdmin );
+
+  useEffect( () => {
+    const thisItemData = blogs?.filter( ( blog ) => {
+      if ( blog?.blogId == id ) return blog;
+    } );
+    if ( thisItemData ) {
+      setTitle( thisItemData[0].title );
+      setDescription( thisItemData[0].description );
+      setBlog( thisItemData[0].blog );
+      setBlogUsername( thisItemData[0].username );
+      setBlogId( id );
+
+    }
+  }, [ blogs, id ] );
+
+  const username = ( isAdmin ? blogUsername : user );
 
   const modules = {
     toolbar: [
@@ -45,14 +66,16 @@ export default function AddBlog () {
   const handlesubmit = async ( e ) => {
     e.preventDefault();
     setShowspinner( ( prev ) => !prev );
-    if ( !title.current?.value && !blog.current?.value && !description.current?.value ) {
+
+
+    if ( !title || !blog || !description ) {
       setShowspinner( ( prev ) => !prev );
-      setErr( 'Please fill the form first!' );
+      setErr( 'Please update the form first!' );
       return;
     }
 
     try {
-      const data = await addBlog( username, title?.current?.value, blogValue, description?.current?.value );
+      const data = await updateUserBlog( blogId, username, title, blog, description );
       if ( data.status == 'success' ) {
         setShowspinner( ( prev ) => !prev );
         dispatch( removeBlogs() );
@@ -64,26 +87,30 @@ export default function AddBlog () {
     } catch ( error ) {
       setShowspinner( ( prev ) => !prev );
       setErr( 'error:' + error );
+
     }
+
   };
 
   return (
     <form
       onSubmit={ handlesubmit }
-      className={ `w-[100%] md:w-[35rem] 2xl:w-[52rem] p-6 md:p-12 bg-[#9b7ee5] mx-auto right-0 left-0 rounded-lg flex flex-col gap-6 md:gap-10` }>
+      className={ `w-[100%] md:w-[35rem] 2xl:w-[52rem] p-6 md:p-12 bg-[#9b7ee5] mx-auto right-0 left-0 rounded-lg flex flex-col gap-6 md:gap-10 my-16` }>
       <h1
         className="font-medium text-xl md:text-3xl text-center">
-        Add Blog
+        Update Blog
       </h1>
       <input
+        value={ title }
+        onChange={ ( e ) => setTitle( e.target.value ) }
         type="text"
-        ref={ title }
         placeholder="Title"
         className="outline outline-black outline-1 text-sm md:text-base p-2" />
       <input
+        value={ description }
+        onChange={ ( e ) => setDescription( e.target.value ) }
         maxLength={ 54 }
         type="text"
-        ref={ description }
         placeholder="Description     (shown below the title at card)"
         className="outline outline-black outline-1 text-sm md:text-base p-2" />
       <div className="bg-white outline outline-black outline-1 text-sm md:text-base p-2 max-h-[100vh]">
@@ -91,8 +118,8 @@ export default function AddBlog () {
           style={ { maxHeight: '50vh', overflowY: 'scroll' } }
           modules={ modules }
           theme="snow"
-          value={ blogValue }
-          onChange={ setBlogValue } />
+          value={ blog }
+          onChange={ setBlog } />
       </div>
       { err ?
         <p
@@ -100,7 +127,7 @@ export default function AddBlog () {
       { !showSpinner ? <button
         className='bg-white py-2 md:py-3 font-medium text-sm md:text-lg'
         type='submit' >
-        { updateBlog ? 'Update' : 'Post' }
+        Update
       </button> : <button
         className='bg-white py-1 md:py-3 pointer-events-none flex justify-center' >
         <FadeLoader
@@ -111,6 +138,10 @@ export default function AddBlog () {
           width={ 2 }
           color={ color } />
       </button> }
+
+      <div
+        className='flex flex-col gap-6'>
+      </div>
     </form>
   );
 }

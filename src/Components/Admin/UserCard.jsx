@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser } from "../../Utils/constants";
-import { removeUsers } from "../../Utils/AdminSlice";
 
 /* eslint-disable react/prop-types */
-export default function UserCard ( { user } ) {
+export default function UserCard ( { user, username, Model } ) {
   const dispatch = useDispatch();
 
   const allBlogs = useSelector( store => store?.blogs?.allBlogs );
@@ -15,9 +13,8 @@ export default function UserCard ( { user } ) {
   const totalCount = totalBlogs.length;
 
   const handledelete = async () => {
-    const data = await deleteUser( user?.username );
-    dispatch( removeUsers() );
-    console.log( data?.User + ' is deleted' );
+    username();
+    Model();
   };
 
   return (

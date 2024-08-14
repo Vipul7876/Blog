@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
-export default function Modal ( { show, Delete,Cancel } ) {
-  console.log( show );
-
+export default function Modal ( { show, Delete, Cancel, message } ) {
   return (
-    <div className={ `absolute flex w-full h-full justify-center items-end md:items-center bg-white bg-opacity-35 ${ show ? '' : 'hidden' }` }>
-      <div className="h-[15rem] w-[25rem] bg-[#d8ccf5] p-4 flex flex-col justify-center items-center gap-8 outline outline-1 outline-black rounded-2xl z-10">
-        <h1 className="text-red-600 font-medium text-xl">Sure you want to delete this blog ?</h1>
+    <div className={ `fixed bottom-0 flex w-full h-full justify-center items-center bg-white bg-opacity-35 ${ show ? '' : 'hidden' }` }>
+      <div className="h-[13rem] md:h-[15rem] w-[20rem]  md:w-[25rem] bg-[#d8ccf5] p-4 flex flex-col justify-center items-center gap-8 outline outline-1 outline-black rounded-2xl z-10">
+        <h1 className="text-red-600 font-medium md:text-xl">{ message }</h1>
         <div className="flex gap-6">
           <button
             onClick={ () => Delete() }

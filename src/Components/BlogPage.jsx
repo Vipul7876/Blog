@@ -50,7 +50,6 @@ export default function BlogPage () {
       <div className="w-[85%] md:max-w-[40%] flex flex-col items-center mb-10">
         <h1 className='font-semibold md:w-auto text-3xl md:text-4xl mx-4 md:mx-0 my-6'>{ thisItemData && thisItemData[ 0 ]?.title }</h1>
         <p className='text-xl font-medium my-5'>{ `" ${ thisItemData && thisItemData[ 0 ]?.description } "` }</p>
-        {/* <p className='text-lg max-w-[40%] min-w-[350px] md:min-w-[400px]'>{ thisItemData && thisItemData[ 0 ]?.blog }</p> */ }
         <div
           className=" editor"
           dangerouslySetInnerHTML={ { __html: thisItemData && thisItemData[ 0 ]?.blog } }>
@@ -68,7 +67,7 @@ export default function BlogPage () {
             Update
           </button> </div> : '' }
       </div>
-      <Modal show={ showModal } Delete={ () => setDeleteblog( !deleteblog ) } Cancel={ () => setShowModal( !showModal ) } />
+      <Modal show={ showModal } Delete={ () => setDeleteblog( !deleteblog ) } Cancel={ () => setShowModal( !showModal ) } message={ 'Sure you want to delete this blog ?'} />
     </div>
   );
 }

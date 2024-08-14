@@ -10,6 +10,7 @@ import { FiLogOut } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Cross from '../assets/cross-15.svg';
+import { removeUsers } from "../Utils/AdminSlice";
 
 export default function Navbar () {
 
@@ -35,15 +36,16 @@ export default function Navbar () {
   const handlogout = () => {
     localStorage.removeItem( 'Token' );
     dispatch( removeUserBlogs() );
+    dispatch( removeUsers() );
     dispatch( removeAdmin() );
     setShowMenu( false );
-    setShowHam( 'hidden' )
+    setShowHam( 'hidden' );
   };
 
   const handleAccount = () => {
     navigate( '/account' );
     setShowMenu( false );
-    setShowHam( 'hidden' )
+    setShowHam( 'hidden' );
   };
 
   const handleSearch = () => {
@@ -55,7 +57,7 @@ export default function Navbar () {
 
   const handlelogin = () => {
     navigate( '/login' );
-    setShowHam( 'hidden' )
+    setShowHam( 'hidden' );
   };
 
   useEffect( () => {
@@ -65,7 +67,7 @@ export default function Navbar () {
       setClickedId( null );
     }
   }, [ clickedId ] );
-  
+
   useEffect( () => {
     if ( showHam === 'block' ) {
       document.body.style.overflow = 'hidden';
@@ -182,7 +184,7 @@ export default function Navbar () {
                 <NavLink to='/myblogs' onClick={ () => setShowHam( 'hidden' ) } >
                   My Blogs
                 </NavLink>
-              </li><li onClick={ handleAccount }>My Account</li> </>: '' }
+              </li><li onClick={ handleAccount }>My Account</li> </> : '' }
               { isLoggedIn && isAdmin ? <li>
                 <NavLink to='/users-list' >
                   Users

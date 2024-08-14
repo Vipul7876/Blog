@@ -29,6 +29,7 @@ const userSlice = createSlice( {
     removeAdmin: ( state ) => {
       state.isLoggedIn = false;
       state.isAdmin = false;
+      state.userBio = null;
       state.User = null;
     },
     removeUserBio: ( state ) => {

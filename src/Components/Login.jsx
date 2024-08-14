@@ -28,8 +28,11 @@ export default function Login () {
     if ( signup ) {
       const msg = validate( name?.current?.value, password?.current?.value, confPassword?.current?.value, 'signup' );
       setErr( msg );
-      if ( msg ) return;
-      const data = await Signup( name?.current?.value, password?.current?.value );
+      if ( msg ) {
+        setShowspinner( ( prev ) => !prev );
+        return;
+      }
+        const data = await Signup( name?.current?.value, password?.current?.value );
 
       if ( data?.status == 'success' ) {
         setShowspinner( ( prev ) => !prev );

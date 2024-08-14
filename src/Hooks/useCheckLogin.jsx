@@ -17,8 +17,12 @@ export default function useCheckLogin () {
       } );
 
       const json = await response?.data;
-
-      dispatch( addUser( json?.User?.username ) );
+      if ( json?.status == 'success' ) {
+        dispatch( addUser( json?.User?.username ) );
+      }
+      else {
+        localStorage.removeItem( 'Token' );
+      }
     } catch ( error ) {
       console.warn( 'Not Found' );
     }
